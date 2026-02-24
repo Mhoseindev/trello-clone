@@ -13,6 +13,7 @@ type PropsType = {
 
 const Index = ({ boardId, card }: PropsType) => {
   const [open, setOpen] = useState(false);
+  const [dndActive, setDndActive] = useState(false);
 
   const cardKey = card.uid ?? card.id;
   const sortableId = `card:${cardKey}:board:${boardId}`;
@@ -23,13 +24,21 @@ const Index = ({ boardId, card }: PropsType) => {
     transition,
   } as React.CSSProperties;
 
+  const enableDnd = () => setDndActive(true);
+  const disableDnd = () => setDndActive(false);
+
   return (
-    <div className={"card"} ref={setNodeRef} style={style}>
+    <div
+      className={"card"}
+      ref={setNodeRef}
+      style={style}
+      onMouseEnter={enableDnd}
+      onMouseLeave={disableDnd}
+      onTouchStart={enableDnd}
+      onTouchEnd={disableDnd}
+      {...(dndActive ? { ...attributes, ...listeners } : {})}
+    >
       <div className={"card-handle-and-title"}>
-        {/* Drag handle: attach listeners/attributes only here so inner buttons are clickable */}
-        <span className={"card-drag-handle"} {...attributes} {...listeners}>
-          ☰
-        </span>
         <h3 className={"card-title"}>{card.name}</h3>
       </div>
 

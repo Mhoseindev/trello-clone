@@ -17,7 +17,6 @@ export default function ReduxProviderClient({
         loading={null}
         persistor={persistor}
         onBeforeLift={() => {
-          // Ensure any hydrated cards have uids before rendering children
           store.dispatch(ensureCardUids());
         }}
       >

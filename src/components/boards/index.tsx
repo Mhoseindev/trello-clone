@@ -18,7 +18,6 @@ const Index = () => {
 
   const parseCardId = (s: string) => {
     const parts = s.split(":");
-    // expected ["card", cardKey, "board", boardId]
     const cardKey = parts[1];
     const boardId = Number(parts[3]);
     return { cardKey, boardId };

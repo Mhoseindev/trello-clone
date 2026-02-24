@@ -41,7 +41,6 @@ const Index = ({ board }: PropsType) => {
   return (
     <div className={"board"} ref={setNodeRef} style={style}>
       <div className={"header"}>
-        {/* Attach drag listeners to the title (drag handle) so buttons remain clickable */}
         <h2 className={"header-title"} {...attributes} {...listeners}>
           {board.name}
         </h2>
