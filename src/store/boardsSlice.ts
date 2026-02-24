@@ -15,6 +15,10 @@ const initialState: BoardsState = {
           id: 1,
           name: "Card 1",
         },
+        {
+          id: 2,
+          name: "Card 2",
+        },
       ],
     },
     {
@@ -60,6 +64,26 @@ const boardsSlice = createSlice({
       }
     },
 
+    addCard(
+      state: BoardsState,
+      action: PayloadAction<{ boardId: number; name: string }>,
+    ) {
+      const b = state.boards.find(
+        (x: Board) => x.id === action.payload.boardId,
+      );
+      if (b) {
+        const nextId =
+          b.cards && b.cards.length > 0
+            ? Math.max(...b.cards.map((c) => c.id)) + 1
+            : 1;
+        const newCard = {
+          id: nextId,
+          name: action.payload.name,
+        } as unknown as any;
+        b.cards = [...(b.cards ?? []), newCard];
+      }
+    },
+
     removeBoard(state: BoardsState, action: PayloadAction<{ id: number }>) {
       state.boards = state.boards.filter(
         (x: Board) => x.id !== action.payload.id,
@@ -82,6 +106,7 @@ const boardsSlice = createSlice({
 export const {
   editBoardTitle,
   clearBoardCards,
+  addCard,
   removeBoard,
   addBoard,
   setBoards,

@@ -1,5 +1,7 @@
+"use client";
 import React from "react";
 import Card from "@/src/components/boards/card";
+import AddCard from "@/src/components/boards/AddCard";
 import { Board } from "@/src/interfaces/boards";
 
 type PropsType = {
@@ -19,7 +21,7 @@ const Index = ({ board }: PropsType) => {
           <Card key={card.id} title={card.name} />
         ))}
       </div>
-      <button className={"board-action"}>Add Another Card</button>
+      <AddCard boardId={board.id} />
     </div>
   );
 };

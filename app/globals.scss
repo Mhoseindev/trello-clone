@@ -7,7 +7,11 @@ $bg-blue-dark: rgb(23, 43, 77);
 $bg-blue: rgb(46, 126, 175);
 $bg-grey: rgb(223, 225, 230);
 $bg-white: rgb(255, 255, 255);
-$bg-black: rgb(64, 66, 75);
+$bg-black-light: rgb(64, 66, 75);
+$bg-black: rgb(0, 0, 0);
+$bg-success: rgb(90, 172, 68);
+$bg-error: rgb(227 12 35);
+
 
 // sizes
 $sizes: (
@@ -35,6 +39,15 @@ body {
   padding-top: map-get($sizes, xl);
 }
 
+input {
+  padding: 0.5rem;
+  border-radius: map-get($sizes, xs);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  font-size: 0.95rem;
+  outline: none;
+}
+
 .page-title {
   color: $text-white;
   margin-bottom: map-get($sizes, xl);
@@ -46,9 +59,15 @@ body {
   font-weight: 600;
 }
 
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .boards-wrapper {
   display: flex;
   flex: 1;
+  align-items: start;
 
   .board {
     width: 16rem;
@@ -76,6 +95,7 @@ body {
       min-height: 2rem;
       flex-grow: 1;
       display: flex;
+      flex-direction: column;
       gap: map-get($sizes, md);
       padding: map-get($sizes, md);
 
@@ -85,7 +105,6 @@ body {
         display: flex;
         flex-direction: column;
         gap: map-get($sizes, md);
-        width: 100%;
         padding: map-get($sizes, md);
 
         .column-title {
@@ -96,9 +115,17 @@ body {
 
         .column-action {
           width: fit-content;
-          background-color: rgba($bg-black, 0.13);
+          background-color: rgba($bg-black-light, 0.13);
         }
       }
+    }
+
+
+    .add-new-card {
+      display: flex;
+      flex-direction: column;
+      gap: map-get($sizes, md);
+      padding: map-get($sizes, md);
     }
 
     .board-action {
@@ -110,8 +137,48 @@ body {
 
       &:hover {
         color: $bg-blue-dark;
-        background-color: rgba($bg-black, 0.13);
+        background-color: rgba($bg-black-light, 0.13);
       }
+    }
+  }
+
+
+  .add-board {
+    background-color: rgba($bg-black, 0.13);
+    width: 16rem;
+    cursor: pointer;
+    border-radius: map-get($sizes, xs);
+
+    .add-board-button {
+      font-size: 1rem;
+      color: $text-white;
+      padding: map-get($sizes, lg);
+    }
+  }
+
+  .board-action.add-btn {
+    background-color: $bg-success;
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 0.75rem;
+    border-radius: map-get($sizes, xs);
+
+    &:hover {
+      background-color: rgba($bg-success, 0.8);
+      color: white;
+    }
+  }
+
+  .board-action.cancel-btn {
+    background-color: $bg-error;
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 0.75rem;
+    border-radius: map-get($sizes, xs);
+
+    &:hover {
+      background-color: rgba($bg-error, 0.8);
+      color: white;
     }
   }
 }
