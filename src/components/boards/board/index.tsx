@@ -8,7 +8,7 @@ type PropsType = {
 
 const Index = ({ board }: PropsType) => {
   return (
-    <div className={"boards"}>
+    <div className={"board"}>
       <div className={"header"}>
         <h2 className={"header-title"}>
           {board.name} - {board.id}

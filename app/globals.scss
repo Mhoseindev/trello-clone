@@ -46,67 +46,72 @@ body {
   font-weight: 600;
 }
 
-.boards {
-  width: 16rem;
-  background-color: $bg-grey;
-  position: relative;
+.boards-wrapper {
   display: flex;
-  flex-shrink: 0;
-  flex-direction: column;
-  margin: 0 0.5rem;
-  border-radius: map-get($sizes, xs);
+  flex: 1;
 
-  .header {
-    padding: map-get($sizes, lg) map-get($sizes, lg) 0 map-get($sizes, lg);
-
-    .header-title {
-      font-size: 1rem;
-      font-weight: 600;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-  }
-
-  .body {
-    min-height: 2rem;
-    flex-grow: 1;
+  .board {
+    width: 16rem;
+    background-color: $bg-grey;
+    position: relative;
     display: flex;
-    gap: map-get($sizes, md);
-    padding: map-get($sizes, md);
+    flex-shrink: 0;
+    flex-direction: column;
+    margin: 0 0.5rem;
+    border-radius: map-get($sizes, xs);
 
-    .column {
-      border-radius: map-get($sizes, xs);
-      background-color: $bg-white;
+    .header {
+      padding: map-get($sizes, lg) map-get($sizes, lg) 0 map-get($sizes, lg);
+
+      .header-title {
+        font-size: 1rem;
+        font-weight: 600;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+
+    .body {
+      min-height: 2rem;
+      flex-grow: 1;
       display: flex;
-      flex-direction: column;
       gap: map-get($sizes, md);
-      width: 100%;
       padding: map-get($sizes, md);
 
-      .column-title {
-        font-size: 0.875rem;
-        word-break: break-word;
-        color: $text-black;
-      }
+      .column {
+        border-radius: map-get($sizes, xs);
+        background-color: $bg-white;
+        display: flex;
+        flex-direction: column;
+        gap: map-get($sizes, md);
+        width: 100%;
+        padding: map-get($sizes, md);
 
-      .column-action {
-        width: fit-content;
-        background-color: rgba($bg-black, 0.13);
+        .column-title {
+          font-size: 0.875rem;
+          word-break: break-word;
+          color: $text-black;
+        }
+
+        .column-action {
+          width: fit-content;
+          background-color: rgba($bg-black, 0.13);
+        }
       }
     }
-  }
 
-  .board-action {
-    text-align: left;
-    padding: map-get($sizes, md) map-get($sizes, lg);
-    transition: 0.2s ease-in;
-    cursor: pointer;
-    color: $text-grey;
+    .board-action {
+      text-align: left;
+      padding: map-get($sizes, md) map-get($sizes, lg);
+      transition: 0.2s ease-in;
+      cursor: pointer;
+      color: $text-grey;
 
-    &:hover {
-      color: $bg-blue-dark;
-      background-color: rgba($bg-black, 0.13);
+      &:hover {
+        color: $bg-blue-dark;
+        background-color: rgba($bg-black, 0.13);
+      }
     }
   }
 }

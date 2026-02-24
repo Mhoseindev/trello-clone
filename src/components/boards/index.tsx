@@ -6,11 +6,11 @@ import Board from "@/src/components/boards/board";
 const Index = () => {
   const boards = useAppSelector((state) => state.boards.boards);
   return (
-    <>
+    <div className={"boards-wrapper"}>
       {boards.map((board) => (
         <Board board={board} key={board.id} />
       ))}
-    </>
+    </div>
   );
 };
 
