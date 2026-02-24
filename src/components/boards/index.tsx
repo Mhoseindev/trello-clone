@@ -1,17 +1,16 @@
+"use client";
 import React from "react";
-import Column from "@/src/components/boards/column";
+import { useAppSelector } from "@/src/store/hooks";
+import Board from "@/src/components/boards/board";
 
 const Index = () => {
+  const boards = useAppSelector((state) => state.boards.boards);
   return (
-    <div className={"boards"}>
-      <div className={"header"}>
-        <h2 className={"header-title"}>ToDo</h2>
-      </div>
-      <div className={"body"}>
-        <Column />
-      </div>
-      <button className={"board-action"}>Add Another Card</button>
-    </div>
+    <>
+      {boards.map((board) => (
+        <Board board={board} key={board.id} />
+      ))}
+    </>
   );
 };
 

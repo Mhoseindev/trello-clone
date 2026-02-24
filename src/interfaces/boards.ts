@@ -1,10 +1,10 @@
 export type Board = {
-  id?: string;
+  id: string;
   name: string;
-  columns?: Columns[];
+  cards?: Card[];
 };
 
-type Columns = {
+type Card = {
   id: string;
   name: string;
   sequence: number;
