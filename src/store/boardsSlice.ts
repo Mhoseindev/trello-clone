@@ -131,6 +131,27 @@ const boardsSlice = createSlice({
     setBoards(state: BoardsState, action: PayloadAction<Board[]>) {
       state.boards = reindexBoards(action.payload);
     },
+
+    // New reducer to reorder boards by index
+    reorderBoards(
+      state: BoardsState,
+      action: PayloadAction<{ sourceIndex: number; destinationIndex: number }>,
+    ) {
+      const { sourceIndex, destinationIndex } = action.payload;
+      if (
+        sourceIndex === destinationIndex ||
+        sourceIndex < 0 ||
+        destinationIndex < 0 ||
+        sourceIndex >= state.boards.length ||
+        destinationIndex >= state.boards.length
+      ) {
+        return;
+      }
+      const copied = [...state.boards];
+      const [moved] = copied.splice(sourceIndex, 1);
+      copied.splice(destinationIndex, 0, moved);
+      state.boards = reindexBoards(copied);
+    },
   },
 });
 
@@ -142,5 +163,6 @@ export const {
   removeBoard,
   addBoard,
   setBoards,
+  reorderBoards,
 } = boardsSlice.actions;
 export default boardsSlice.reducer;

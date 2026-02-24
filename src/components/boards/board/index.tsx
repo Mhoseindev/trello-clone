@@ -6,6 +6,8 @@ import AddNewCard from "@/src/components/boards/add-new-card";
 import ListActions from "@/src/components/boards/list-actions";
 import { useAppDispatch } from "@/src/store/hooks";
 import { clearBoardCards, removeBoard } from "@/src/store/boardsSlice";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 type PropsType = {
   board: Board;
@@ -13,6 +15,13 @@ type PropsType = {
 
 const Index = ({ board }: PropsType) => {
   const dispatch = useAppDispatch();
+
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: String(board.id) });
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  } as React.CSSProperties;
 
   const handleDeleteAllCards = (boardId: number) => {
     dispatch(clearBoardCards({ boardId }));
@@ -23,7 +32,13 @@ const Index = ({ board }: PropsType) => {
   };
 
   return (
-    <div className={"board"}>
+    <div
+      className={"board"}
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+    >
       <div className={"header"}>
         <h2 className={"header-title"}>{board.name}</h2>
         <ListActions
