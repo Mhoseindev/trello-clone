@@ -6,11 +6,11 @@ type PropsType = {
 
 const Index = ({ title }: PropsType) => {
   return (
-    <div className={"column"}>
-      <h3 className={"column-title"}>{title}</h3>
+    <div className={"card"}>
+      <h3 className={"card-title"}>{title}</h3>
 
       <div className={"flex justify-end"}>
-        <button className={"column-action"}>comments</button>
+        <button className={"card-action"}>comments</button>
       </div>
     </div>
   );

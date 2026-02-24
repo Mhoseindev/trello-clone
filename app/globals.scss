@@ -99,7 +99,7 @@ input {
       gap: map-get($sizes, md);
       padding: map-get($sizes, md);
 
-      .column {
+      .card {
         border-radius: map-get($sizes, xs);
         background-color: $bg-white;
         display: flex;
@@ -107,13 +107,13 @@ input {
         gap: map-get($sizes, md);
         padding: map-get($sizes, md);
 
-        .column-title {
+        .card-title {
           font-size: 0.875rem;
           word-break: break-word;
           color: $text-black;
         }
 
-        .column-action {
+        .card-action {
           width: fit-content;
           background-color: rgba($bg-black-light, 0.13);
         }

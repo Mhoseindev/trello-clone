@@ -6,7 +6,7 @@ import { addCard } from "@/src/store/boardsSlice";
 
 type Props = { boardId: number };
 
-export default function AddCard({ boardId }: Props) {
+const Index = ({ boardId }: Props) => {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -46,7 +46,7 @@ export default function AddCard({ boardId }: Props) {
     <div className={"add-new-card"}>
       <input
         ref={inputRef}
-        placeholder="Enter card title..."
+        placeholder="Enter a card title..."
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         onKeyDown={onKeyDown}
@@ -61,4 +61,6 @@ export default function AddCard({ boardId }: Props) {
       </div>
     </div>
   );
-}
+};
+
+export default Index;
