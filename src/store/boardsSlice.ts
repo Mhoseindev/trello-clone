@@ -1,6 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { Board, Card } from "@/src/interfaces/boards";
 
+const makeUid = (boardId: number, cardId: number) =>
+  `${boardId}-${cardId}-${Date.now()}`;
+
 type BoardsState = {
   boards: Board[];
 };
@@ -13,11 +16,13 @@ const initialState: BoardsState = {
       cards: [
         {
           id: 1,
+          uid: makeUid(1, 1),
           name: "Card 1",
           comments: [],
         },
         {
           id: 2,
+          uid: makeUid(1, 2),
           name: "Card 2",
           comments: [],
         },
@@ -80,6 +85,7 @@ const boardsSlice = createSlice({
             : 1;
         const newCard: Card = {
           id: nextId,
+          uid: makeUid(b.id, nextId),
           name: action.payload.name,
           comments: [],
         };
@@ -152,6 +158,55 @@ const boardsSlice = createSlice({
       copied.splice(destinationIndex, 0, moved);
       state.boards = reindexBoards(copied);
     },
+
+    // New reducer to move a card between/within boards
+    moveCard(
+      state: BoardsState,
+      action: PayloadAction<{
+        fromBoardId: number;
+        toBoardId: number;
+        fromIndex: number;
+        toIndex: number;
+        cardId?: number;
+      }>,
+    ) {
+      const { fromBoardId, toBoardId, fromIndex, toIndex } = action.payload;
+      if (fromIndex < 0 || toIndex < 0) return;
+      const fromBoard = state.boards.find((b) => b.id === fromBoardId);
+      const toBoard = state.boards.find((b) => b.id === toBoardId);
+      if (!fromBoard || !fromBoard.cards) return;
+      if (!toBoard) return;
+      const copiedFromCards = [...(fromBoard.cards ?? [])];
+      if (fromIndex >= copiedFromCards.length) return;
+      const [moved] = copiedFromCards.splice(fromIndex, 1);
+      // remove from source
+      fromBoard.cards = copiedFromCards;
+      // insert into destination
+      const copiedToCards = [...(toBoard.cards ?? [])];
+
+      // ensure moved card has a uid; if collides with existing uid, generate a new uid
+      if (!moved.uid) moved.uid = makeUid(toBoard.id, moved.id);
+      if (copiedToCards.some((c) => c.uid === moved.uid)) {
+        // create a new uid based on toBoard and moved.id
+        moved.uid = makeUid(toBoard.id, moved.id);
+      }
+
+      const insertIndex = Math.min(toIndex, copiedToCards.length);
+      copiedToCards.splice(insertIndex, 0, moved);
+      toBoard.cards = copiedToCards;
+    },
+
+    // Ensure all cards have uid (run on app start or when hydrating)
+    ensureCardUids(state: BoardsState) {
+      state.boards.forEach((b) => {
+        if (!b.cards) return;
+        b.cards.forEach((c) => {
+          if (!c.uid) {
+            c.uid = makeUid(b.id, c.id);
+          }
+        });
+      });
+    },
   },
 });
 
@@ -164,5 +219,7 @@ export const {
   addBoard,
   setBoards,
   reorderBoards,
+  moveCard,
+  ensureCardUids,
 } = boardsSlice.actions;
 export default boardsSlice.reducer;

@@ -7,6 +7,7 @@ export type Comment = {
 
 export type Card = {
   id: number;
+  uid?: string;
   name: string;
   comments?: Comment[];
 };
