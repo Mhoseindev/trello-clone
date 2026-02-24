@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { Board } from "@/src/interfaces/boards";
+import type { Board, Card } from "@/src/interfaces/boards";
 
 type BoardsState = {
   boards: Board[];
@@ -14,10 +14,12 @@ const initialState: BoardsState = {
         {
           id: 1,
           name: "Card 1",
+          comments: [],
         },
         {
           id: 2,
           name: "Card 2",
+          comments: [],
         },
       ],
     },
@@ -76,12 +78,41 @@ const boardsSlice = createSlice({
           b.cards && b.cards.length > 0
             ? Math.max(...b.cards.map((c) => c.id)) + 1
             : 1;
-        const newCard = {
+        const newCard: Card = {
           id: nextId,
           name: action.payload.name,
-        } as unknown as any;
+          comments: [],
+        };
         b.cards = [...(b.cards ?? []), newCard];
       }
+    },
+
+    addComment(
+      state: BoardsState,
+      action: PayloadAction<{
+        boardId: number;
+        cardId: number;
+        text: string;
+        author?: string;
+      }>,
+    ) {
+      const b = state.boards.find(
+        (x: Board) => x.id === action.payload.boardId,
+      );
+      if (!b || !b.cards) return;
+      const c = b.cards.find((x: Card) => x.id === action.payload.cardId);
+      if (!c) return;
+      const nextId =
+        c.comments && c.comments.length > 0
+          ? Math.max(...c.comments.map((cm) => cm.id)) + 1
+          : 1;
+      const newComment = {
+        id: nextId,
+        text: action.payload.text,
+        author: action.payload.author ?? "",
+        createdAt: new Date().toISOString(),
+      };
+      c.comments = [...(c.comments ?? []), newComment];
     },
 
     removeBoard(state: BoardsState, action: PayloadAction<{ id: number }>) {
@@ -107,6 +138,7 @@ export const {
   editBoardTitle,
   clearBoardCards,
   addCard,
+  addComment,
   removeBoard,
   addBoard,
   setBoards,

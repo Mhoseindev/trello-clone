@@ -116,6 +116,8 @@ input {
         .card-action {
           width: fit-content;
           background-color: rgba($bg-black-light, 0.13);
+          padding: map-get($sizes, xs);
+          border-radius: map-get($sizes, xs);
         }
       }
     }
@@ -183,6 +185,79 @@ input {
   }
 }
 
+// List actions (three dots + popup)
+.list-actions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  .list-actions-button {
+    background: transparent;
+    border: none;
+    padding: 6px;
+    color: $text-grey;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+
+    svg {
+      display: block;
+    }
+
+    &:hover {
+      background: rgba($bg-black-light, 0.06);
+      color: $bg-blue-dark;
+    }
+  }
+
+  .list-actions-menu {
+    position: absolute;
+    top: 32px;
+    right: 0;
+    width: 200px;
+    background: $bg-white;
+    color: $text-black;
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    padding: 8px 6px;
+    z-index: 20;
+
+    .menu-title {
+      font-size: 0.875rem;
+      color: $text-grey;
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .menu-action {
+      width: 100%;
+      text-align: left;
+      padding: 8px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      color: $text-blue-dark;
+      border-radius: 4px;
+      margin-top: 6px;
+
+      &:hover {
+        background: rgba($bg-black-light, 0.06);
+      }
+    }
+
+    .delete-list {
+      color: $bg-error;
+    }
+
+    .delete-all {
+      color: $bg-blue-dark;
+    }
+  }
+}
+
 .flex {
   display: flex;
 }
@@ -201,4 +276,95 @@ input {
 
 .align-center {
   align-items: center;
+}
+
+/* Comment modal global styles (kept separate from .board styles) */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal {
+  width: 520px;
+  background: $bg-white;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.modal-body {
+  margin-bottom: 12px;
+}
+
+.muted {
+  background: #f3f4f6;
+  padding: 8px;
+  border-radius: 4px;
+  color: $text-grey;
+}
+
+/* ensure textarea follows project form styles */
+.modal textarea,
+.modal-body textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #e5e7eb;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn {
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.btn-primary {
+  background: $bg-success;
+  color: $text-white;
+  border: none;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.comment {
+  background: #fafafa;
+  padding: 8px;
+  border-radius: 4px;
+  display: flex;
+  gap: map-get($sizes, xs);
+  flex-direction: column;
+}
+
+.comment-meta {
+  font-size: 11px;
+  color: $text-grey;
 }
