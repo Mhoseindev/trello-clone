@@ -6,6 +6,8 @@ $text-blue-dark: rgb(23, 43, 77);
 $bg-blue-dark: rgb(23, 43, 77);
 $bg-blue: rgb(46, 126, 175);
 $bg-grey: rgb(223, 225, 230);
+$bg-white: rgb(255, 255, 255);
+$bg-black: rgb(64, 66, 75);
 
 // sizes
 $sizes: (
@@ -30,11 +32,22 @@ button {
 body {
   background-color: $bg-blue;
   font-family: Roboto, sans-serif;
+  padding-top: map-get($sizes, xl);
+}
+
+.page-title {
+  color: $text-white;
+  margin-bottom: map-get($sizes, xl);
+  padding: 0 map-get($sizes, xl);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1.3rem;
+  font-weight: 600;
 }
 
 .boards {
   width: 16rem;
-  padding: map-get($sizes, md);
   background-color: $bg-grey;
   position: relative;
   display: flex;
@@ -44,26 +57,76 @@ body {
   border-radius: map-get($sizes, xs);
 
   .header {
-    width: 100%;
-    padding: map-get($sizes, md) map-get($sizes, lg) 0 map-get($sizes, md);
+    padding: map-get($sizes, lg) map-get($sizes, lg) 0 map-get($sizes, lg);
+
+    .header-title {
+      font-size: 1rem;
+      font-weight: 600;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
   }
 
   .body {
-    width: 100%;
     min-height: 2rem;
     flex-grow: 1;
+    display: flex;
+    gap: map-get($sizes, md);
+    padding: map-get($sizes, md);
+
+    .column {
+      border-radius: map-get($sizes, xs);
+      background-color: $bg-white;
+      display: flex;
+      flex-direction: column;
+      gap: map-get($sizes, md);
+      width: 100%;
+      padding: map-get($sizes, md);
+
+      .column-title {
+        font-size: 0.875rem;
+        word-break: break-word;
+        color: $text-black;
+      }
+
+      .column-action {
+        width: fit-content;
+        background-color: rgba($bg-black, 0.13);
+      }
+    }
   }
 
-  .action {
+  .board-action {
     text-align: left;
-    width: 100%;
     padding: map-get($sizes, md) map-get($sizes, lg);
     transition: 0.2s ease-in;
     cursor: pointer;
+    color: $text-grey;
 
     &:hover {
       color: $bg-blue-dark;
-      background-color: rgba($bg-grey, 0.13);
+      background-color: rgba($bg-black, 0.13);
     }
   }
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-end {
+  justify-content: end;
+}
+
+.justify-start {
+  justify-content: start;
+}
+
+.align-center {
+  align-items: center;
 }
