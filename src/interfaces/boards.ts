@@ -1,11 +1,10 @@
 export type Board = {
-  id: string;
+  id: number;
   name: string;
   cards?: Card[];
 };
 
 type Card = {
-  id: string;
+  id: number;
   name: string;
-  sequence: number;
 };

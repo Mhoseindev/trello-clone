@@ -8,21 +8,30 @@ type BoardsState = {
 const initialState: BoardsState = {
   boards: [
     {
-      id: "1",
+      id: 1,
       name: "ToDo",
-      cards: [],
+      cards: [
+        {
+          id: 1,
+          name: "Card 1",
+        },
+      ],
     },
     {
-      id: "2",
+      id: 2,
       name: "In Progress",
       cards: [],
     },
     {
-      id: "3",
+      id: 3,
       name: "Done",
       cards: [],
     },
   ],
+};
+
+const reindexBoards = (boards: Board[]) => {
+  return boards.map((b, idx) => ({ ...b, id: idx + 1 }));
 };
 
 const boardsSlice = createSlice({
@@ -31,7 +40,7 @@ const boardsSlice = createSlice({
   reducers: {
     editBoardTitle(
       state: BoardsState,
-      action: PayloadAction<{ id: string; name: string }>,
+      action: PayloadAction<{ id: number; name: string }>,
     ) {
       const b = state.boards.find((x: Board) => x.id === action.payload.id);
       if (b) {
@@ -41,7 +50,7 @@ const boardsSlice = createSlice({
 
     clearBoardCards(
       state: BoardsState,
-      action: PayloadAction<{ boardId: string }>,
+      action: PayloadAction<{ boardId: number }>,
     ) {
       const b = state.boards.find(
         (x: Board) => x.id === action.payload.boardId,
@@ -51,19 +60,21 @@ const boardsSlice = createSlice({
       }
     },
 
-    removeBoard(state: BoardsState, action: PayloadAction<{ id: string }>) {
+    removeBoard(state: BoardsState, action: PayloadAction<{ id: number }>) {
       state.boards = state.boards.filter(
         (x: Board) => x.id !== action.payload.id,
       );
+      state.boards = reindexBoards(state.boards);
     },
 
     // helpers
-    addBoard(state: BoardsState, action: PayloadAction<Board>) {
-      state.boards.push(action.payload);
+    addBoard(state: BoardsState, action: PayloadAction<Omit<Board, "id">>) {
+      state.boards.push({ ...action.payload, id: state.boards.length + 1 });
+      state.boards = reindexBoards(state.boards);
     },
 
     setBoards(state: BoardsState, action: PayloadAction<Board[]>) {
-      state.boards = action.payload;
+      state.boards = reindexBoards(action.payload);
     },
   },
 });
